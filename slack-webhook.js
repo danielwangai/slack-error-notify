@@ -10,7 +10,7 @@ module.exports = function (url) {
     */
     if(!url) {
       console.log('Slack webhook URL was not set.');
-      return false;
+      return "Slack webhook URL was not set.";
     }
     if(typeof done != 'function') {
       done = function() {};
