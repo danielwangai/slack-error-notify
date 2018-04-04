@@ -40,5 +40,62 @@ module.exports = function (url) {
     });
   };
 
+  pub.send = function (options, done) {
+    if(typeof options == 'string') {
+      options = { text: options }
+    }
+
+    // add options to defaults
+    var defaults = {
+      username: 'Error',
+      text: '',
+      icon_emoji: ':bell:'
+    };
+
+    var data = Object.assign(defaults, options);
+
+    // Move the fields into attachments
+    if (options.fields) {
+      if (!data.attachments) {
+        data.attachments = [];
+      }
+
+      data.attachments.push({
+        fallback: 'Alert details',
+        fields: _.map(options.fields, function (value, title) {
+          return {
+            title: title,
+            value: value,
+            short: (value + '').length < 25
+          };
+        })
+      });
+
+      delete(data.fields);
+    }
+
+    if(options.icon_url && !options.icon_emoji) {
+      delete(data.icon_emoji);
+    }
+    pub.request(data, done)
+  }
+
+  pub.extend = function(defaults) {
+    return function(options, done) {
+      if (typeof options == 'string') {
+        options = {text: options};
+      }
+
+      pub.send(_.extend(defaults, options), done);
+    }
+  }
+
+  // operations
+  pub.bug = pub.extend({
+    channel: "#monitor",
+    icon_emoji: ":bomb:",
+    username: 'monitor-test'
+  })
+
   return pub;
 }
