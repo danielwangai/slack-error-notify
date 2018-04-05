@@ -77,7 +77,10 @@ module.exports = function (url) {
     if(options.icon_url && !options.icon_emoji) {
       delete(data.icon_emoji);
     }
-    pub.request(data, done)
+    let request = pub.request(data, ()=> {
+      
+    })
+    return request
   }
 
   pub.extend = function(defaults) {
@@ -85,8 +88,8 @@ module.exports = function (url) {
       if (typeof options == 'string') {
         options = {text: options};
       }
-
-      pub.send(_.extend(defaults, options), done);
+      let payload = pub.send(_.extend(defaults, options), done);
+      return payload;
     }
   }
 
