@@ -77,9 +77,7 @@ module.exports = function (url) {
     if(options.icon_url && !options.icon_emoji) {
       delete(data.icon_emoji);
     }
-    let request = pub.request(data, ()=> {
-      
-    })
+    let request = pub.request(data, done)
     return request
   }
 
@@ -87,6 +85,14 @@ module.exports = function (url) {
     return function(options, done) {
       if (typeof options == 'string') {
         options = {text: options};
+      }
+      if(options !== undefined && options.length == 0) {
+        console.log("Provide a descriptive message.")
+        return "Provide a descriptive message."
+      }
+      if(options == undefined) {
+        console.log("Provide a descriptive message.")
+        return "Provide a descriptive message."
       }
       let payload = pub.send(_.extend(defaults, options), done);
       return payload;

@@ -11,6 +11,7 @@ try {
 	getRectArea(3, 'A');
 }
 catch (e) {
-	slack.bug(e)
+	console.log(e)
+	slack.bug()
 	// expected output: "Parameter is not a number!"
 }
