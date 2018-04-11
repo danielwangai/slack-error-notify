@@ -1,8 +1,10 @@
 {
-  "name": "slack-notify",
+  "name": "slack-error-notify",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "repository": "https://github.com:danielwangai/slack-notification",
+  "author": "Daniel W. Maina",
   "scripts": {
     "test": "mocha ./test/*.test.js"
   },
