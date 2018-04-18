@@ -1,5 +1,5 @@
 var MY_SLACK_WEBHOOK_URL = process.env.SLACK_BUG_WEBHOOK_URL
-const slack = require('./slack-webhook')(MY_SLACK_WEBHOOK_URL);
+const slack = require('./index.js')(MY_SLACK_WEBHOOK_URL);
 
 function getRectArea(width, height) {
 	if (isNaN(width) || isNaN(height)) {
