@@ -12,6 +12,7 @@ try {
 }
 catch (e) {
 	console.log(e)
+	slack.bug(e)
 	// console.log(typeof slack.request(e))
 	// expected output: "Parameter is not a number!"
 }
