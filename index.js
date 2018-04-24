@@ -116,5 +116,9 @@ module.exports = function (url) {
     username: 'monitor-test'
   })
 
+  pub.log = error => (
+    error.stack
+  )
+
   return pub;
 }
