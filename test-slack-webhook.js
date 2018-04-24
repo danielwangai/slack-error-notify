@@ -8,9 +8,10 @@ function getRectArea(width, height) {
 }
 
 try {
-	getRectArea(3, 'A');
+	getRectArea(3, 'A')
 }
+
 catch (e) {
+	slack.log(e)
 	slack.bug(e)
-	// expected output: "Parameter is not a number!"
 }

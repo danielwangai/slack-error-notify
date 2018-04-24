@@ -4,7 +4,7 @@ const _ = require('lodash')
 module.exports = function (url) {
   var pub = {}
 
-  pub.request = function(data, done) {
+  pub.makeRequest = function(data, done) {
     /**
      * handle edge cases before making POST request.
     */
@@ -28,7 +28,15 @@ module.exports = function (url) {
         pub.onError(err);
         return done(err);
       }
-      if (response.body !== 'ok') {
+      if (response.body == undefined) {
+          return "Invalid slack webhook URL."
+        }
+   
+      if (response.body == 'ok') {
+        console.log("RESPONSE\n\n",  response.body,' f')
+        return "Slack notification sent successfully."
+      }
+      else if (response.body !== 'ok') {
         /**
          * something went wrong.
          * response ok - means successful request.
@@ -77,16 +85,27 @@ module.exports = function (url) {
     if(options.icon_url && !options.icon_emoji) {
       delete(data.icon_emoji);
     }
-    pub.request(data, done)
+    let request = pub.makeRequest(data, done)
+    // console.log('the ', request == 'Slack notification sent successfully.')
+    
+    return request
   }
 
   pub.extend = function(defaults) {
-    return function(options, done) {
+    return function(options = '', done) {
       if (typeof options == 'string') {
+        if(options.length == 0){
+          console.log("Provide a descriptive message.")
+          return "Provide a descriptive message."
+        }
         options = {text: options};
       }
-
-      pub.send(_.extend(defaults, options), done);
+      if(options == undefined) {
+        console.log("Provide a descriptive message.")
+        return "Provide a descriptive message."
+      }
+      let payload = pub.send(_.extend(defaults, options), done);
+      return payload;
     }
   }
 
@@ -96,6 +115,10 @@ module.exports = function (url) {
     icon_emoji: ":bomb:",
     username: 'monitor-test'
   })
+
+  pub.log = function (error) {
+    return error.stack
+  }
 
   return pub;
 }
