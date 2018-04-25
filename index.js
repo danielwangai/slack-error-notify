@@ -55,7 +55,7 @@ module.exports = function (url) {
 
     // add options to defaults
     var defaults = {
-      username: 'Error',
+      username: 'Error-Report',
       text: '',
       icon_emoji: ':bell:'
     };
@@ -111,9 +111,9 @@ module.exports = function (url) {
 
   // operations
   pub.bug = pub.extend({
-    channel: "#monitor",
-    icon_emoji: ":bomb:",
-    username: 'monitor-test'
+    channel: process.env.SLACK_BUG_CHANNEL,
+    icon_emoji: process.env.BUG_EMOJI,
+    username: process.env.BUG_REPORT_USERNAME
   })
 
   pub.log = error => (
